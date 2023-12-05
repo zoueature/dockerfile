@@ -1,0 +1,20 @@
+FROM golang:1.21-alpine3.18
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories && apk add git openssh-client
+
+RUN wget https://github.com/mikefarah/yq/releases/download/v4.40.4/yq_linux_amd64 && \
+chmod +x yq_linux_amd64 && \
+mv yq_linux_amd64 /usr/bin/yq
+
+
+
+ENV GOPRIVATE="gitlab.jiebu.com"
+ENV GOINSECURE="gitlab.jiebu.com"
+ENV GOPROXY='https://goproxy.cn,direct'
+
+RUN mkdir -p /root/.ssh
+COPY ./rsa /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
+COPY ./known_hosts /root/.ssh
+
+RUN git config --global url."git@gitlab.jiebu.com:".insteadOf "http://gitlab.jiebu.com/"
