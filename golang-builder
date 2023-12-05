@@ -10,10 +10,8 @@ ENV GOPRIVATE="gitlab.jiebu.com"
 ENV GOINSECURE="gitlab.jiebu.com"
 ENV GOPROXY='https://goproxy.cn,direct'
 
-RUN mkdir -p /root/.ssh/id_rsa
+RUN mkdir -p /root/.ssh
 COPY ./rsa /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
 
 RUN git config --global url."git@gitlab.jiebu.com:".insteadOf "http://gitlab.jiebu.com/"
-
-
-
