@@ -12,6 +12,7 @@ ENV GOPROXY='https://goproxy.cn,direct'
 
 RUN mkdir -p /root/.ssh
 COPY ./rsa /root/.ssh/id_rsa
+RUN chmod 400 /root/.ssh/id_rsa
 COPY ./know_hosts /root/.ssh
 
 RUN git config --global url."git@gitlab.jiebu.com:".insteadOf "http://gitlab.jiebu.com/"
